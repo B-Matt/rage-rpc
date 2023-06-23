@@ -96,11 +96,11 @@ export function parseData(data: string): any {
 }
 
 export function promiseResolve(result: any): Promise<any> {
-    return new Promise(resolve => setTimeout(() => resolve(result), 0));
+    return new Promise(resolve => resolve(result));
 }
 
 export function promiseReject(error: any): Promise<any> {
-    return new Promise((_, reject) => setTimeout(() => reject(error), 0));
+    return new Promise((_, reject) => reject(error));
 }
 
 export function promiseTimeout(promise: Promise<any>, timeout?: number){
@@ -119,4 +119,18 @@ export function isBrowserValid(browser: Browser): boolean {
         browser.url;
     }catch(e){ return false; }
     return true;
+}
+
+export function chunkSubstr(str: string, size: number): Array<String> {
+    const numChunks = Math.ceil(str.length / size);
+    const chunks = new Array(numChunks);
+
+    let index = 0;
+    for (let i = 0; i < numChunks; i += 1) {
+        chunks[i] = str.substr(index, size);
+
+        index += size;
+    }
+  
+    return chunks;
 }
